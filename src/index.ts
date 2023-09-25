@@ -1,30 +1,13 @@
+const { XMLParser, XMLBuilder, XMLValidator} = require("fast-xml-parser");
+
 export default {
-	async fetch(request, env, ctx) {
+	async fetch(request: Request) {
 	  
-	  const url = "https://liturgia.silvestrini.org/rss_giorno.xml";
-  
-	  /**
-	   * gatherResponse awaits and returns a response body as a string.
-	   * Use await gatherResponse(..) in an async function to get the response body
-	   * @param {Response} response
-	   */
-	  async function gatherResponse(response) {
-		const { headers } = response;
-		const contentType = headers.get("content-type") || "";
-		if (contentType.includes("application/json")) {
-		  return JSON.stringify(await response.json());
-		}
-		return response.text();
-	  }
-  
-	  const init = {
-		headers: {
-		  "content-type": "application/xml;charset=UTF-8",
-		},
-	  };
-  
-	  const response = await fetch(url, init);
-	  const results = await gatherResponse(response);
-	  return new Response(results, init);
+	  const url = 'https://liturgia.silvestrini.org/rss_giorno.xml'
+	  
+
+	  const dailyObject = new XMLParser().parse(await (await fetch(url)).text())
+	  console.log(dailyObject.rss.channel)
+	  return new Response(JSON.stringify(dailyObject, undefined, 4));
 	},
   };
