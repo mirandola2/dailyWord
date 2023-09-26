@@ -23,7 +23,7 @@ export default {
 			
 
 			dailyInfo.Letture = itemParts[0].trim()
-			dailyInfo.Link = item.Link
+			dailyInfo.Link = item.link
 
 			itemParts.forEach(i=>{
 				if(i.includes('CANTO AL VANGELO')){
