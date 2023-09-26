@@ -2,12 +2,7 @@ import { XMLParser } from "fast-xml-parser";
 
 export default {
 	async fetch(request: Request) {
-		
 
-	  function getStringBeforeSeparator(string: String){
-		let separator = ' ||| '
-		return string.split(separator)[0]
-	  }
 	  function capitalizeFirstLetter(string: String) {
 		return string[0].toUpperCase() + string.slice(1);
 	}
@@ -32,8 +27,7 @@ export default {
 
 			itemParts.forEach(i=>{
 				if(i.includes('CANTO AL VANGELO')){
-					dailyInfo.CantoVangelo=i.split('Alleluia.').slice(-2)[0].replace('\n', '').trim()
-					
+					dailyInfo.CantoVangelo=i.split('Alleluia.').slice(-2)[0].replace(/(?:\r\n|\r|\n)/g, ' ').trim()
 				}
 			})
 		}
